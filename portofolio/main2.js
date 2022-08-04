@@ -35,10 +35,26 @@ pointLight.position.set(5, 5, 5);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
 
+//Helpers and controls for panning around :)
 const lightHelper = new THREE.PointLightHelper(pointLight)
 const gridHelper = new THREE.GridHelper(200, 50);
 scene.add(lightHelper, gridHelper)
 const controls = new OrbitControls(camera, renderer.domElement);
+
+//Stars
+const geometry_star = new THREE.SphereGeometry(0.25, 24, 24);
+const material_star = new THREE.MeshStandardMaterial({ color: 0xffffff });
+
+function addStar() {
+  const star = new THREE.Mesh(geometry_star, material_star);
+
+  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+
+  star.position.set(x, y, z);
+  scene.add(star);
+}
+
+Array(1000).fill().forEach(addStar);
 
 // Animation Loop
 
