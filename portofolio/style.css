@@ -6,6 +6,11 @@ canvas {
   left: 0;
 }
 
+frm1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 
 :root {
   --dark-bg: rgba(15, 15, 15, 0.95);

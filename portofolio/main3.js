@@ -18,10 +18,9 @@ class planet {
         //return planet;
     }
     
-    update_pos(time){
-        console.log("tesrtrawd")
-        this.planet.position.x = this.radius * Math.sin((100/this.speed)*time);
-        this.planet.position.z = this.radius * Math.cos((100/this.speed)*time);
+    update_pos(time,multiplier){
+        this.planet.position.x = this.radius * Math.sin((multiplier/this.speed)*time);
+        this.planet.position.z = this.radius * Math.cos((multiplier/this.speed)*time);
   }
 }
 
@@ -47,8 +46,9 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(30);
-camera.position.setX(-3);
+camera.position.setY(130);
+camera.position.setX(-200);
+camera.position.setZ(-100);
 
 renderer.render(scene, camera);
 
@@ -111,9 +111,10 @@ function animate() {
   
   torus.position.x = 50 * Math.sin(time1);
   torus.position.z = 50 * Math.cos(time1);
+  var multiplier1 = document.getElementById("multiplier").value
   
   for (let i = 0; i < planet_list.length; i++) {
-    planet_list[i].update_pos(time1);
+    planet_list[i].update_pos(time1,multiplier1);
   }
   
   time1 += 0.01;
