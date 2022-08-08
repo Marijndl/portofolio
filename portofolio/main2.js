@@ -53,7 +53,7 @@ const material = new THREE.MeshStandardMaterial({ color: 0xff6347 });
 const torus = new THREE.Mesh(geometry, material);
 torus.position.setZ(50);
 
-scene.add(torus);
+//scene.add(torus);
 
 // Lights
 
@@ -71,9 +71,14 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 //make a new planet
 
-const earth = planet(50,1);
-const murcery = planet(10,4);
-const moon = planet(15,0.25);
+const murcery = planet(6,2.44);
+const venus = planet(11,6);
+const earth = planet(14,6.4);
+
+//var planet_dict = {earth: [365,6.4,15],murcery: [88,2.44,6]}
+
+const planet_list = [murcery,venus,earth];
+//const moon = planet(15,0.25);
 
 //Midpoint
 const geo_midpoint = new THREE.SphereGeometry(1, 24, 24);
@@ -82,6 +87,8 @@ const midpoint = new THREE.Mesh(geo_midpoint, material_mid);
 scene.add(midpoint);
 
 // Animation Loop
+
+console.log();
 
 var time1 = 0;
 function animate() {
@@ -93,9 +100,15 @@ function animate() {
   
   torus.position.x = 50 * Math.sin(time1);
   torus.position.z = 50 * Math.cos(time1);
-  update_pos(earth,50,time1);
-  update_pos(murcery,10,time1);
-  update_moon(murcery,moon,6,5,time1);
+  
+  for (let i = 0; i < planet_list.length; i++) {
+    update_pos(planet_list[i],(i+1)*10,(100/88)*time1);
+  }
+  
+  // update_pos(murcery,6,(100/88)*time1);
+  // update_pos(venus,11,(100/225)*time1);
+  // update_pos(earth,14,(100/365)*time1);
+  //update_moon(murcery,moon,6,5,time1);
   time1 += 0.01;
 
   controls.update();
@@ -104,3 +117,4 @@ function animate() {
   }
 
 animate();
+
