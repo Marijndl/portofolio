@@ -2,6 +2,34 @@ import './style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+//FUNCTIONS
+
+function planet(r,size){
+    const geometry = new THREE.SphereGeometry(size, 24, 24);
+    const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const planet = new THREE.Mesh(geometry, material);
+    planet.position.setZ(r);
+    scene.add(planet);
+    return planet;
+  }
+  
+  function update_pos(planet,r,time1){
+    planet.position.x = r * Math.sin(time1);
+    planet.position.z = r * Math.cos(time1);
+  
+  }
+  
+  function update_moon(planet,moon,r,speed,time1){
+    moon.position.x = planet.position.x + r * Math.sin(speed*time1);
+    moon.position.z = planet.position.z + r * Math.cos(speed*time1);
+  
+  }
+
+
+// --------------------------------------------------------Code-----------------------------------------------------------//
+
+
+
 // Setup
 const scene = new THREE.Scene();
 
@@ -43,22 +71,9 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 //make a new planet
 
-function planet(r,size){
-  const geometry = new THREE.SphereGeometry(size, 24, 24);
-  const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
-  const planet = new THREE.Mesh(geometry, material);
-  planet.position.setZ(r);
-  scene.add(planet);
-  return planet
-}
-
 const earth = planet(50,1);
-
-function update_pos(planet,size,time1){
-  planet.position.x = size * Math.sin(time1);
-  planet.position.z = size * Math.cos(time1);
-
-}
+const murcery = planet(10,4);
+const moon = planet(15,0.25);
 
 //Midpoint
 const geo_midpoint = new THREE.SphereGeometry(1, 24, 24);
@@ -79,11 +94,13 @@ function animate() {
   torus.position.x = 50 * Math.sin(time1);
   torus.position.z = 50 * Math.cos(time1);
   update_pos(earth,50,time1);
+  update_pos(murcery,10,time1);
+  update_moon(murcery,moon,6,5,time1);
   time1 += 0.01;
 
   controls.update();
 
   renderer.render(scene, camera);
-}
+  }
 
 animate();
