@@ -4,14 +4,15 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 //FUNCTIONS
 class planet {
-    constructor(speed,size,radius) {
+    constructor(speed,size,radius,texture) {
         this.speed = speed;
         this.size = size;
         this.radius = radius;
         
-        const geometry = new THREE.SphereGeometry(this.size, 24, 24);
-        const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
-        const planet = new THREE.Mesh(geometry, material);
+        const planet = new THREE.Mesh(
+            new THREE.SphereGeometry(this.size, 24, 24),
+            new THREE.MeshStandardMaterial({ map: texture })
+        );
         this.planet = planet;
         planet.position.setZ(this.radius);
         scene.add(this.planet);
@@ -52,6 +53,10 @@ camera.position.setZ(-100);
 
 renderer.render(scene, camera);
 
+//background
+const spaceTexture = new THREE.TextureLoader().load('stars.jpg');
+scene.background = spaceTexture;
+
 // Torus
 
 const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
@@ -77,19 +82,28 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 //make a new planet
 
-const murcery = new planet(88,2.44,20);
-const venus = new planet(225,6,30);
-const earth = new planet(365,6.4,40);
-const mars = new planet(687,3.4,45);
-const jupiter = new planet(11.86*365,69.91,120);
-const saturnus = new planet(29.45*365,58.2,250);
-const uranus = new planet(84.02*365,25.1,340);
-const neptune = new planet(164.8*365,24.6,400);
+const mercury_texture =     new THREE.TextureLoader().load('mercury.jpg');
+const venus_texture =       new THREE.TextureLoader().load('venus.jpg');
+const earth_texture =       new THREE.TextureLoader().load('earth.jpg');
+const mars_texture =        new THREE.TextureLoader().load('mars.jpg');
+const jupiter_texture =     new THREE.TextureLoader().load('jupiter.jpg');
+const saturn_texture =    new THREE.TextureLoader().load('saturn.jpg');
+const uranus_texture =      new THREE.TextureLoader().load('uranus.jpg');
+const neptune_texture =     new THREE.TextureLoader().load('neptune.jpg');
+
+const mercury = new planet(88,2.44,20,mercury_texture);
+const venus = new planet(225,6,29,venus_texture);
+const earth = new planet(365,6.4,42,earth_texture);
+const mars = new planet(687,3.4,53,mars_texture);
+const jupiter = new planet(11.86*365,69.91,126,jupiter_texture);
+const saturn = new planet(29.45*365,58.2,256,saturn_texture);
+const uranus = new planet(84.02*365,25.1,346,uranus_texture);
+const neptune = new planet(164.8*365,24.6,406,neptune_texture);
 
 
-//var planet_dict = {earth: [365,6.4,15],murcery: [88,2.44,6]}
+//var planet_dict = {earth: [365,6.4,15],mercury: [88,2.44,6]}
 
-const planet_list = [murcery,venus,earth,mars,jupiter,saturnus,uranus,neptune];
+const planet_list = [mercury,venus,earth,mars,jupiter,saturn,uranus,neptune];
 //const moon = planet(15,0.25);
 
 //Midpoint
@@ -117,6 +131,9 @@ function animate() {
     planet_list[i].update_pos(time1,multiplier1);
   }
   
+//   camera.position.x = 150 * Math.sin((multiplier1/365)*time1);
+//   camera.position.z = 150 * Math.cos((multiplier1/365)*time1);
+
   time1 += 0.01;
 
   controls.update();
