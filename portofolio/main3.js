@@ -77,14 +77,14 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 //make a new planet
 
-const murcery = new planet(88,2.44,60);
-const venus = new planet(225,6,110);
-const earth = new planet(365,6.4,140);
-const mars = new planet(687,3.4,230);
-const jupiter = new planet(11.86*365,69.91,780);
-const saturnus = new planet(29.45*365,58.2,1430);
-const uranus = new planet(84.02*365,25.1,2870);
-const neptune = new planet(164.8*365,24.6,4500);
+const murcery = new planet(88,2.44,20);
+const venus = new planet(225,6,30);
+const earth = new planet(365,6.4,40);
+const mars = new planet(687,3.4,45);
+const jupiter = new planet(11.86*365,69.91,120);
+const saturnus = new planet(29.45*365,58.2,250);
+const uranus = new planet(84.02*365,25.1,340);
+const neptune = new planet(164.8*365,24.6,400);
 
 
 //var planet_dict = {earth: [365,6.4,15],murcery: [88,2.44,6]}
